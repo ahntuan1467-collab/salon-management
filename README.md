@@ -22,22 +22,22 @@
 
 ## 🧩 Cấu trúc thư mục chính
 
-salon-management/
-├── src/
-│ ├── main/
-│ │ ├── java/com/example/salonmanagement/
-│ │ │ ├── controller/ # Controller xử lý request (Home, Service, Customer, Booking,...)
-│ │ │ ├── model/ # Các Entity ánh xạ CSDL
-│ │ │ ├── repository/ # Interface làm việc với DB (JPA)
-│ │ │ ├── service/ # Xử lý nghiệp vụ trung gian
-│ │ │ └── util/ # Các class tiện ích (helper, format date, validation, v.v.)
-│ │ ├── resources/
-│ │ │ ├── templates/ # Giao diện Thymeleaf
-│ │ │ ├── static/ # CSS, JS, hình ảnh
-│ │ │ └── application.properties
-│ └── test/ # Unit test
-├── pom.xml # Cấu hình Maven
-└── README.md
+salon-management/                                                                                                                                                                                                                              
+├── src/                                                                                                                                                                                                                                       
+│ ├── main/                                                                                                                                                                                                                                    
+│ │ ├── java/com/example/salonmanagement/                                                                                                                                                                                                      
+│ │ │ ├── controller/ # Controller xử lý request (Home, Service, Customer, Booking,...)                                                                                                                                                        
+│ │ │ ├── model/ # Các Entity ánh xạ CSDL                                                                                                                                                                                                      
+│ │ │ ├── repository/ # Interface làm việc với DB (JPA)                                                                                                                                                                                        
+│ │ │ ├── service/ # Xử lý nghiệp vụ trung gian                                                                                                                                                                                                
+│ │ │ └── util/ # Các class tiện ích (helper, format date, validation, v.v.)                                                                                                                                                                   
+│ │ ├── resources/                                                                                                                                                                                                                             
+│ │ │ ├── templates/ # Giao diện Thymeleaf                                                                                                                                                                                                     
+│ │ │ ├── static/ # CSS, JS, hình ảnh                                                                                                                                                                                                          
+│ │ │ └── application.properties                                                                                                                                                                                                               
+│ └── test/ # Unit test                                                                                                                                                                                                                        
+├── pom.xml # Cấu hình Maven                                                                                                                                                                                                                   
+└── README.md                                                                                 
 
 ---
 
