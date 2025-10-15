@@ -66,3 +66,12 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.thymeleaf.cache=false
 server.port=8080
+| Thành viên        | Vai trò                               |
+| ----------------- | ------------------------------------- |
+| Nguyễn Thu Trang  | Leader – Kiến trúc hệ thống & Backend |
+| Trần Vinh Trí     | Frontend (Thymeleaf, UI/UX)           |
+| Nguyễn Thế Trung  | Database & Service logic              |
+| Nguyễn Đức Tuấn   | Tích hợp & kiểm thử                   |
+| Nguyễn Trung Tùng | Frontend (Thymeleaf, UI/UX)           |
+| Hoàng Anh Tuấn    | Database & Service logic              |
+| Nguyễn Phú Trọng  | Tích hợp & kiểm thử                   |
