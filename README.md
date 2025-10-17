@@ -72,6 +72,7 @@ server.port=8080
 | Trần Vinh Trí     | Frontend (Thymeleaf, UI/UX)           |
 | Nguyễn Thế Trung  | Database & Service logic              |
 | Nguyễn Đức Tuấn   | Tích hợp & kiểm thử                   |
-| Nguyễn Trung Tùng | Frontend (Thymeleaf, UI/UX)           |
+| Nguyễn Trung Tùng | Frontend (Thymeleaf 6, UI/UX,           |
+|                   |  Spring Security 6)                   |
 | Hoàng Anh Tuấn    | Database & Service logic              |
 | Nguyễn Phú Trọng  | Tích hợp & kiểm thử                   |
