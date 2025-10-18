@@ -24,6 +24,19 @@ public class ServiceService {
         return repository.findAll();
     }
 
+    public byte[] getImageById(Integer id) {
+        Optional<ServiceEntity> optional = repository.findById(id);
+        if (optional.isEmpty()) {
+            throw new RuntimeException("Không tìm thấy dịch vụ có ID = " + id);
+        }
+
+        ServiceEntity service = optional.get();
+        if (service.getImage() == null) {
+            throw new RuntimeException("Dịch vụ này chưa có ảnh!");
+        }
+
+        return service.getImage();
+    }
 }
 
 
