@@ -318,7 +318,7 @@
         /*<![CDATA[*/
         const services = /*[[${services}]]*/ []; // danh sách từ server
         const tbody = document.querySelector("tbody");
-        const searchInput = document.getElementById('searchInput');
+        // const searchInput = document.getElementById('searchInput');
 
         const pageSize = 5;
         let currentPage = 1;
@@ -346,8 +346,27 @@
             `;
                 tbody.appendChild(row);
             });
-            applySearchHighlight(); // giữ highlight sau khi render lại
             showPage(1); // reset pagination
+        }
+
+        // --- Pagination ---
+        function showPage(page) {
+            currentPage = page;
+            const rows = tbody.querySelectorAll("tr");
+            const start = (page - 1) * pageSize;
+            const end = page * pageSize;
+
+            rows.forEach((row, idx) => {
+                row.style.display = (idx >= start && idx < end) ? "" : "none";
+            });
+
+            document.getElementById("page-info").innerText = `Trang ${currentPage} / ${Math.ceil(rows.length / pageSize)}`;
+        }
+
+        function prevPage() { if(currentPage > 1) showPage(currentPage - 1); }
+        function nextPage() {
+            const rows = tbody.querySelectorAll("tr");
+            if(currentPage < Math.ceil(rows.length / pageSize)) showPage(currentPage + 1);
         }
 
         // --- Sort ---
@@ -365,10 +384,8 @@
             priceAsc = !priceAsc;
             renderTable(currentList);
         });
-
         // --- Render lần đầu ---
         document.addEventListener("DOMContentLoaded", () => renderTable(currentList));
-        /*]]>*/
 
         const imageInput = document.getElementById('imageInput');
         const preview = document.getElementById('preview');
@@ -383,7 +400,9 @@
                 reader.readAsDataURL(file);
             }
         });
+
     </script>
+
 </div>
 </body>
 </html>
