@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -39,4 +42,40 @@ public class ServiceViewController {
         return "service/form";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editService(@PathVariable("id") Integer id, Model model) {
+        ServiceEntity service = serviceService.getServiceById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Service not found ID: " + id));
+        model.addAttribute("service", service);
+        model.addAttribute("pageTitle", "Sửa Dịch vụ");
+        return "service/form";
+    }
+
+    @PostMapping("/save")
+    public String saveOrUpdateService(
+            @RequestParam(required = false) Integer serviceId,
+            @RequestParam String serviceName,
+            @RequestParam ServiceEntity.Category category,
+            @RequestParam Integer price,
+            @RequestParam Integer duration,
+            @RequestParam ServiceEntity.Status status,
+            @RequestParam(required = false) MultipartFile image
+    ) throws IOException {
+        if (serviceId == null) {
+            // Thêm mới
+            ServiceEntity service = new ServiceEntity();
+            service.setServiceName(serviceName);
+            service.setCategory(category);
+            service.setPrice(price);
+            service.setDuration(duration);
+            service.setStatus(status);
+            if (image != null && !image.isEmpty()) {
+                service.setImage(image.getBytes());
+            }
+            serviceService.saveService(service);
+        } else {
+            serviceService.updateService(serviceId, serviceName, category, price, duration, status, image);
+        }
+        return "redirect:/services";
+    }
 }
