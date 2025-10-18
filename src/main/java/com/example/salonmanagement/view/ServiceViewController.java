@@ -31,4 +31,12 @@ public class ServiceViewController {
         byte[] image = serviceService.getImageById(id);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
+
+    @GetMapping("/new")
+    public String addServiceForm(Model model) {
+        model.addAttribute("service", new ServiceEntity());
+        model.addAttribute("pageTitle", "Thêm Dịch vụ");
+        return "service/form";
+    }
+
 }

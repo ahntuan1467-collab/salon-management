@@ -37,6 +37,10 @@ public class ServiceService {
 
         return service.getImage();
     }
+
+    public ServiceEntity saveService(ServiceEntity service) {
+        return repository.save(service);
+    }
 }
 
 
