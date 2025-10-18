@@ -252,7 +252,6 @@
     <a class="btn btn-secondary" th:href="@{/}">← Quay lại</a>
 </div>
 
-
 <div class="container py-4">
 
     <!-- có bo tròn -->
@@ -315,118 +314,76 @@
     <!-- Add button -->
     <a class="btn btn-success add-btn" th:href="@{/services/new}">+</a>
 
-<!--    <script th:inline="javascript">-->
-<!--        /*<![CDATA[*/-->
-<!--        const services = /*[[${services}]]*/ []; // danh sách từ server-->
-<!--        const tbody = document.querySelector("tbody");-->
-<!--        const searchInput = document.getElementById('searchInput');-->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const services = /*[[${services}]]*/ []; // danh sách từ server
+        const tbody = document.querySelector("tbody");
+        const searchInput = document.getElementById('searchInput');
 
-<!--        const pageSize = 5;-->
-<!--        let currentPage = 1;-->
+        const pageSize = 5;
+        let currentPage = 1;
 
-<!--        let nameAsc = true;-->
-<!--        let priceAsc = true;-->
-<!--        let currentList = [...services]; // danh sách đang hiển thị-->
+        let nameAsc = true;
+        let priceAsc = true;
+        let currentList = [...services]; // danh sách đang hiển thị
 
-<!--        function renderTable(list) {-->
-<!--            tbody.innerHTML = '';-->
-<!--            list.forEach((service, index) => {-->
-<!--                const row = document.createElement('tr');-->
-<!--                row.innerHTML = `-->
-<!--                <td>${service.serviceId}</td>-->
-<!--                <td>${service.image ? `<img src="/services/image/${service.serviceId}" width="80" id="preview">` : ''}</td>-->
-<!--                <td>${service.serviceName}</td>-->
-<!--                <td>${service.price}</td>-->
-<!--                <td>${service.duration} phút</td>-->
-<!--                <td>${service.status}</td>-->
-<!--                <td>${service.category}</td>-->
-<!--                <td>-->
-<!--                    <a href="/services/edit/${service.serviceId}">✏️</a>-->
-<!--                    <a href="/services/delete/${service.serviceId}" onclick="return confirm('Bạn có chắc muốn xóa không?')">🗑</a>-->
-<!--                </td>-->
-<!--            `;-->
-<!--                tbody.appendChild(row);-->
-<!--            });-->
-<!--            applySearchHighlight(); // giữ highlight sau khi render lại-->
-<!--            showPage(1); // reset pagination-->
-<!--        }-->
+        function renderTable(list) {
+            tbody.innerHTML = '';
+            list.forEach((service, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${service.serviceId}</td>
+                <td>${service.image ? `<img src="/services/image/${service.serviceId}" width="80" id="preview">` : ''}</td>
+                <td>${service.serviceName}</td>
+                <td>${service.price}</td>
+                <td>${service.duration} phút</td>
+                <td>${service.status}</td>
+                <td>${service.category}</td>
+                <td>
+                    <a href="/services/edit/${service.serviceId}">✏️</a>
+                    <a href="/services/delete/${service.serviceId}" onclick="return confirm('Bạn có chắc muốn xóa không?')">🗑</a>
+                </td>
+            `;
+                tbody.appendChild(row);
+            });
+            applySearchHighlight(); // giữ highlight sau khi render lại
+            showPage(1); // reset pagination
+        }
 
-<!--        // -&#45;&#45; Pagination -&#45;&#45;-->
-<!--        function showPage(page) {-->
-<!--            currentPage = page;-->
-<!--            const rows = tbody.querySelectorAll("tr");-->
-<!--            const start = (page - 1) * pageSize;-->
-<!--            const end = page * pageSize;-->
+        // --- Sort ---
+        document.getElementById('thServiceName').addEventListener('click', () => {
+            currentList.sort((a,b) => nameAsc
+                ? a.serviceName.localeCompare(b.serviceName)
+                : b.serviceName.localeCompare(a.serviceName)
+            );
+            nameAsc = !nameAsc;
+            renderTable(currentList);
+        });
 
-<!--            rows.forEach((row, idx) => {-->
-<!--                row.style.display = (idx >= start && idx < end) ? "" : "none";-->
-<!--            });-->
+        document.getElementById('thPrice').addEventListener('click', () => {
+            currentList.sort((a,b) => priceAsc ? a.price - b.price : b.price - a.price);
+            priceAsc = !priceAsc;
+            renderTable(currentList);
+        });
 
-<!--            document.getElementById("page-info").innerText = `Trang ${currentPage} / ${Math.ceil(rows.length / pageSize)}`;-->
-<!--        }-->
+        // --- Render lần đầu ---
+        document.addEventListener("DOMContentLoaded", () => renderTable(currentList));
+        /*]]>*/
 
-<!--        function prevPage() { if(currentPage > 1) showPage(currentPage - 1); }-->
-<!--        function nextPage() {-->
-<!--            const rows = tbody.querySelectorAll("tr");-->
-<!--            if(currentPage < Math.ceil(rows.length / pageSize)) showPage(currentPage + 1);-->
-<!--        }-->
+        const imageInput = document.getElementById('imageInput');
+        const preview = document.getElementById('preview');
 
-<!--        // -&#45;&#45; Sort -&#45;&#45;-->
-<!--        document.getElementById('thServiceName').addEventListener('click', () => {-->
-<!--            currentList.sort((a,b) => nameAsc-->
-<!--                ? a.serviceName.localeCompare(b.serviceName)-->
-<!--                : b.serviceName.localeCompare(a.serviceName)-->
-<!--            );-->
-<!--            nameAsc = !nameAsc;-->
-<!--            renderTable(currentList);-->
-<!--        });-->
-
-<!--        document.getElementById('thPrice').addEventListener('click', () => {-->
-<!--            currentList.sort((a,b) => priceAsc ? a.price - b.price : b.price - a.price);-->
-<!--            priceAsc = !priceAsc;-->
-<!--            renderTable(currentList);-->
-<!--        });-->
-
-<!--        // -&#45;&#45; Search real-time -&#45;&#45;-->
-<!--        function applySearchHighlight() {-->
-<!--            const keyword = searchInput.value.toLowerCase();-->
-<!--            const rows = tbody.querySelectorAll('tr');-->
-<!--            rows.forEach(row => {-->
-<!--                const serviceName = row.cells[2].innerText.toLowerCase();-->
-<!--                const serviceCatgory = row.cells[6].innerText.toLowerCase();-->
-<!--                if(serviceName.includes(keyword) || serviceCatgory.includes(keyword)) {-->
-<!--                    row.style.display = '';-->
-<!--                    row.style.backgroundColor = '#fff4a3';-->
-<!--                } else {-->
-<!--                    row.style.display = 'none';-->
-<!--                    row.style.backgroundColor = '';-->
-<!--                }-->
-<!--            });-->
-<!--        }-->
-
-<!--        searchInput.addEventListener('input', applySearchHighlight);-->
-
-<!--        // -&#45;&#45; Render lần đầu -&#45;&#45;-->
-<!--        document.addEventListener("DOMContentLoaded", () => renderTable(currentList));-->
-<!--        /*]]>*/-->
-
-<!--        const imageInput = document.getElementById('imageInput');-->
-<!--        const preview = document.getElementById('preview');-->
-
-<!--        imageInput.addEventListener('change', function() {-->
-<!--            const file = this.files[0];-->
-<!--            if (file) {-->
-<!--                const reader = new FileReader();-->
-<!--                reader.onload = function(e) {-->
-<!--                    preview.src = e.target.result;-->
-<!--                }-->
-<!--                reader.readAsDataURL(file);-->
-<!--            }-->
-<!--        });-->
-
-<!--    </script>-->
-
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </div>
-
 </body>
 </html>
