@@ -316,7 +316,7 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        const services = /*[[${services}]]*/ []; // danh sách từ server
+        const services = /*[[${services}]]*/ [];
         const tbody = document.querySelector("tbody");
         const searchInput = document.getElementById('searchInput');
 
@@ -325,7 +325,7 @@
 
         let nameAsc = true;
         let priceAsc = true;
-        let currentList = [...services]; // danh sách đang hiển thị
+        let currentList = [...services];
 
         function renderTable(list) {
             tbody.innerHTML = '';
@@ -346,7 +346,8 @@
             `;
                 tbody.appendChild(row);
             });
-            showPage(1); // reset pagination
+            applySearchHighlight();
+            showPage(1);
         }
 
         // --- Pagination ---
@@ -402,6 +403,8 @@
             });
         }
 
+        searchInput.addEventListener('input', applySearchHighlight);
+
         // --- Render lần đầu ---
         document.addEventListener("DOMContentLoaded", () => renderTable(currentList));
         /*]]>*/
@@ -419,7 +422,9 @@
                 reader.readAsDataURL(file);
             }
         });
+
     </script>
+
 </div>
 </body>
 </html>
