@@ -44,4 +44,25 @@ public class ServiceController {
         service.setImage(image.getBytes());
         return serviceService.saveService(service);
     }
+
+    // Cập nhật dịch vụ (từng phần)
+    @PutMapping(value = "/edit/{id}", consumes = "multipart/form-data")
+    public ServiceEntity updateService(
+            @PathVariable Integer id,
+            @RequestParam(required = false) String serviceName,
+            @RequestParam(required = false) ServiceEntity.Category category,
+            @RequestParam(required = false) Integer price,
+            @RequestParam(required = false) Integer duration,
+            @RequestParam(required = false) ServiceEntity.Status status,
+            @RequestParam(required = false) MultipartFile image
+    ) throws IOException {
+        return serviceService.updateService(id, serviceName, category, price, duration, status, image);
+    }
+
+    @GetMapping("/{id}")
+    public ServiceEntity getServiceById(@PathVariable Integer id) {
+        return serviceService.getServiceById(id)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
+    }
+
 }
