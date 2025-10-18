@@ -288,10 +288,12 @@
             <td th:text="${service.status}"></td>
             <td th:text="${service.category}"></td>
             <td>
-                <!-- <a class="btn btn-info btn-sm btn-action" th:href="@{'/services/view/' + ${service.serviceId}}">👁</a> -->
                 <a class="btn btn-warning btn-sm btn-action" th:href="@{'/services/edit/' + ${service.serviceId}}">✏️</a>
+
                 <a class="btn btn-danger btn-sm btn-action" th:href="@{'/services/delete/' + ${service.serviceId}}"
-                   onclick="return confirm('Bạn có chắc muốn xóa không?')">🗑</a>
+                   onclick="return confirm('Bạn có chắc muốn xóa không?')">🗑
+                </a>
+
             </td>
         </tr>
         </tbody>
