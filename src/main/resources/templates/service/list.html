@@ -318,7 +318,7 @@
         /*<![CDATA[*/
         const services = /*[[${services}]]*/ []; // danh sách từ server
         const tbody = document.querySelector("tbody");
-        // const searchInput = document.getElementById('searchInput');
+        const searchInput = document.getElementById('searchInput');
 
         const pageSize = 5;
         let currentPage = 1;
@@ -384,8 +384,27 @@
             priceAsc = !priceAsc;
             renderTable(currentList);
         });
+
+        // --- Search real-time ---
+        function applySearchHighlight() {
+            const keyword = searchInput.value.toLowerCase();
+            const rows = tbody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const serviceName = row.cells[2].innerText.toLowerCase();
+                const serviceCatgory = row.cells[6].innerText.toLowerCase();
+                if(serviceName.includes(keyword) || serviceCatgory.includes(keyword)) {
+                    row.style.display = '';
+                    row.style.backgroundColor = '#fff4a3';
+                } else {
+                    row.style.display = 'none';
+                    row.style.backgroundColor = '';
+                }
+            });
+        }
+
         // --- Render lần đầu ---
         document.addEventListener("DOMContentLoaded", () => renderTable(currentList));
+        /*]]>*/
 
         const imageInput = document.getElementById('imageInput');
         const preview = document.getElementById('preview');
@@ -400,9 +419,7 @@
                 reader.readAsDataURL(file);
             }
         });
-
     </script>
-
 </div>
 </body>
 </html>
