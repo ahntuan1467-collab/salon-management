@@ -41,6 +41,47 @@ public class ServiceService {
     public ServiceEntity saveService(ServiceEntity service) {
         return repository.save(service);
     }
+
+    public ServiceEntity updateService(Integer id,
+                                       String serviceName,
+                                       ServiceEntity.Category category,
+                                       Integer price,
+                                       Integer duration,
+                                       ServiceEntity.Status status,
+                                       MultipartFile image) throws IOException {
+
+        Optional<ServiceEntity> optional = repository.findById(id);
+        if (optional.isEmpty()) {
+            throw new RuntimeException("Không tìm thấy dịch vụ có ID = " + id);
+        }
+
+        ServiceEntity existing = optional.get();
+
+        if (serviceName != null && !serviceName.isEmpty()) {
+            existing.setServiceName(serviceName);
+        }
+        if (category != null) {
+            existing.setCategory(category);
+        }
+        if (price != null) {
+            existing.setPrice(price);
+        }
+        if (duration != null) {
+            existing.setDuration(duration);
+        }
+        if (status != null) {
+            existing.setStatus(status);
+        }
+        if (image != null && !image.isEmpty()) {
+            existing.setImage(image.getBytes());
+        }
+
+        return repository.save(existing);
+    }
+
+    public Optional<ServiceEntity> getServiceById(Integer id) {
+        return repository.findById(id);
+    }
 }
 
 
