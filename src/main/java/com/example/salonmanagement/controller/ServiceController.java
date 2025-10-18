@@ -25,4 +25,23 @@ public class ServiceController {
         return serviceService.getAllServices();
     }
 
+    // Tạo mới service có upload ảnh
+    @PostMapping(consumes = "multipart/form-data")
+    public ServiceEntity createService(
+            @RequestParam("serviceName") String serviceName,
+            @RequestParam("category") ServiceEntity.Category category,
+            @RequestParam("price") Integer price,
+            @RequestParam("duration") Integer duration,
+            @RequestParam("status") ServiceEntity.Status status,
+            @RequestParam("image") MultipartFile image
+    ) throws IOException {
+        ServiceEntity service = new ServiceEntity();
+        service.setServiceName(serviceName);
+        service.setCategory(category);
+        service.setPrice(price);
+        service.setDuration(duration);
+        service.setStatus(status);
+        service.setImage(image.getBytes());
+        return serviceService.saveService(service);
+    }
 }
