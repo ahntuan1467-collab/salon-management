@@ -38,7 +38,7 @@ public class CustomerController {
     public void deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
     }
-    // Tìm kiếm khách hàng
+    // Tìm kiếm khách hàngaa
     @GetMapping("/search")
     public List<Customer> searchCustomer(@RequestParam String keyword) {
         return customerService.searchCustomers(keyword);
